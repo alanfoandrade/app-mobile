@@ -34,6 +34,7 @@ export default function SignUp({ navigation }) {
 
   const handleSubmit = useCallback(
     async (data) => {
+      console.tron.log('ENVIOU!');
       try {
         formRef.current?.setErrors({});
         setLoading(true);
@@ -65,9 +66,9 @@ export default function SignUp({ navigation }) {
           abortEarly: false,
         });
 
-        await api.post('users', data);
+        // await api.post('users', data);
 
-        navigation.navigate('SignIn');
+        // navigation.navigate('SignIn');
       } catch (err) {
         err.name === 'ValidationError'
           ? formRef.current?.setErrors(getValidationErrors(err))
@@ -99,7 +100,7 @@ export default function SignUp({ navigation }) {
               autoCapitalize="words"
               returnKeyType="next"
               onSubmitEditing={() => {
-                emailInputRef.current.focus();
+                console.tron.log('MUDOU!');
               }}
             />
             <FormInput
