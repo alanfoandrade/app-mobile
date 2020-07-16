@@ -1,7 +1,6 @@
 import styled from 'styled-components/native';
 
 import Input from '../../../components/Input';
-import InputMasked from '../../../components/InputMasked';
 import SubmitButton from '../../../components/SubmitButton';
 
 import colors from '../../../styles/colors';
@@ -19,13 +18,6 @@ export const FormContainer = styled.View`
 `;
 
 export const FormInput = styled(Input).attrs({
-  color: `${colors.primary}`,
-  inputColor: `${colors.secondary}`,
-})`
-  margin-bottom: 30px;
-`;
-
-export const FormInputMasked = styled(InputMasked).attrs({
   color: `${colors.primary}`,
   inputColor: `${colors.secondary}`,
 })`

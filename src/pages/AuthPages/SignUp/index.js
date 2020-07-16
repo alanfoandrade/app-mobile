@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import getValidationErrors from '../../../utils/getValidationErrors';
 
-import api from '../../../services/api';
+// import api from '../../../services/api';
 
 import strings from '../../../assets/strings';
 
@@ -14,7 +14,6 @@ import {
   Wrapper,
   FormContainer,
   FormInput,
-  FormInputMasked,
   SignUpButton,
   SignInLink,
   SignInLinkText,
@@ -32,62 +31,59 @@ export default function SignUp({ navigation }) {
 
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = useCallback(
-    async (data) => {
-      console.tron.log('ENVIOU!');
-      try {
-        formRef.current?.setErrors({});
-        setLoading(true);
+  const handleSubmit = useCallback(async (data) => {
+    console.tron.log('ENVIOU!');
+    try {
+      formRef.current?.setErrors({});
+      setLoading(true);
 
-        const schema = Yup.object().shape({
-          name: Yup.string().required('Nome requerido'),
-          email: Yup.string()
-            .required('E-mail requerido')
-            .email('Formato de e-mail inválido'),
-          cpf: Yup.string()
-            .min(11, 'Formato 11 dígitos')
-            .max(11, 'Formato 11 dígitos')
-            .required('CPF requerido'),
-          phone: Yup.string()
-            .min(11, 'Formato 11 dígitos')
-            .max(11, 'Formato 11 dígitos')
-            .required('Telefone requerido'),
-          password: Yup.string().min(6, 'Mínimo 6 caracteres'),
-          password_confirmation: Yup.string()
-            .required('Confirme a senha')
-            .when('password', (password, field) =>
-              password
-                ? field.oneOf([Yup.ref('password')], 'Senhas diferentes')
-                : field
-            ),
-        });
+      const schema = Yup.object().shape({
+        name: Yup.string().required('Nome requerido'),
+        email: Yup.string()
+          .required('E-mail requerido')
+          .email('Formato de e-mail inválido'),
+        cpf: Yup.string()
+          .min(11, 'Formato 11 dígitos')
+          .max(11, 'Formato 11 dígitos')
+          .required('CPF requerido'),
+        phone: Yup.string()
+          .min(11, 'Formato 11 dígitos')
+          .max(11, 'Formato 11 dígitos')
+          .required('Telefone requerido'),
+        password: Yup.string().min(6, 'Mínimo 6 caracteres'),
+        password_confirmation: Yup.string()
+          .required('Confirme a senha')
+          .when('password', (password, field) =>
+            password
+              ? field.oneOf([Yup.ref('password')], 'Senhas diferentes')
+              : field
+          ),
+      });
 
-        await schema.validate(data, {
-          abortEarly: false,
-        });
+      await schema.validate(data, {
+        abortEarly: false,
+      });
 
-        // await api.post('users', data);
+      // await api.post('users', data);
 
-        // navigation.navigate('SignIn');
-      } catch (err) {
-        err.name === 'ValidationError'
-          ? formRef.current?.setErrors(getValidationErrors(err))
-          : Alert.alert(
-              'Falha no cadastro',
-              err?.response?.data
-                ? String(
-                    err?.response?.data.map((validation) => {
-                      return validation.message;
-                    })
-                  )
-                : 'Verifique os dados, tente novamente'
-            );
+      // navigation.navigate('SignIn');
+    } catch (err) {
+      err.name === 'ValidationError'
+        ? formRef.current?.setErrors(getValidationErrors(err))
+        : Alert.alert(
+            'Falha no cadastro',
+            err?.response?.data
+              ? String(
+                  err?.response?.data.map((validation) => {
+                    return validation.message;
+                  })
+                )
+              : 'Verifique os dados, tente novamente'
+          );
 
-        setLoading(false);
-      }
-    },
-    [navigation]
-  );
+      setLoading(false);
+    }
+  }, []);
 
   return (
     <Wrapper>
@@ -101,6 +97,7 @@ export default function SignUp({ navigation }) {
               returnKeyType="next"
               onSubmitEditing={() => {
                 console.tron.log('MUDOU!');
+                emailInputRef.current.focus();
               }}
             />
             <FormInput
@@ -114,7 +111,7 @@ export default function SignUp({ navigation }) {
                 cpfInputRef.current.focus();
               }}
             />
-            <FormInputMasked
+            <FormInput
               ref={cpfInputRef}
               title={`${strings.input_cpf}`}
               name="cpf"
@@ -125,7 +122,7 @@ export default function SignUp({ navigation }) {
                 phoneInputRef.current.focus();
               }}
             />
-            <FormInputMasked
+            <FormInput
               ref={phoneInputRef}
               title={`${strings.input_phone}`}
               name="phone"

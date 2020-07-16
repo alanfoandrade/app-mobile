@@ -12,7 +12,6 @@ import { signInRequest } from '../../../store/modules/auth/actions';
 import {
   FormContainer,
   FormInput,
-  FormInputMasked,
   SignInButton,
   LinkBar,
   PassRecovery,
@@ -62,7 +61,7 @@ export default function SignIn({ navigation }) {
     <AuthLayout>
       <Form ref={formRef} onSubmit={handleSubmit}>
         <FormContainer>
-          <FormInputMasked
+          <FormInput
             title={`${strings.input_cpf}`}
             name="cpf"
             type="cpf"

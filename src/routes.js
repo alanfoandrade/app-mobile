@@ -1,10 +1,12 @@
 import React from 'react';
+
 import { createStackNavigator } from '@react-navigation/stack';
 
 import SignIn from './pages/AuthPages/SignIn';
 import SignUp from './pages/AuthPages/SignUp';
 import ForgotPassword from './pages/AuthPages/ForgotPassword';
 import ResetPassword from './pages/AuthPages/ResetPassword';
+import Dashboard from './pages/Dashboard';
 
 const Stack = createStackNavigator();
 
@@ -18,7 +20,7 @@ export default function createRouter(signedIn = false) {
     </Stack.Navigator>
   ) : (
     <Stack.Navigator initialRouteName="DashboardRoutes">
-      <Stack.Screen name="DashboardRoutes" component={{}} />
+      <Stack.Screen name="DashboardRoutes" component={Dashboard} />
     </Stack.Navigator>
   );
 }
